@@ -2,7 +2,7 @@
   "name": "cep-maps",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://douglasramaldes.github.io/",
+  "homepage": " https://douglasramaldes.github.io/cep-maps/",
   "dependencies": {
     "feather-icons": "^4.24.1",
     "fetch-jsonp": "^1.1.3",
