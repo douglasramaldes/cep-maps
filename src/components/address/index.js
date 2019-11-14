@@ -17,6 +17,9 @@ const AddressInfos = styled.p`
 export default function Address(props) {
   return (
     <ContainerAddress>
+      {props.notValid && (
+        <AddressLogradouro>CEP não encontrado</AddressLogradouro>
+      )}
       <AddressLogradouro>{props.address.logradouro}</AddressLogradouro>
       <AddressInfos>{props.address.bairro}</AddressInfos>
       <AddressInfos>

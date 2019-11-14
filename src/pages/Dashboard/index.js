@@ -52,18 +52,21 @@ class FindCep extends Component {
       value: "",
       address: "",
       cep: "",
-      showCard: false
+      showCard: false,
+      notFound: false
     };
     this.currentCep = null;
   }
 
   handleClose = () => {
-    this.setState({ showCard: false, value: "" });
+    this.setState({ showCard: false, value: "", notFound: false });
   };
 
   handleCepChange = value => {
     this.setState({ value });
+  };
 
+  validationCep = value => {
     if (isValidCep(value) && value !== this.currentCep) {
       this.currentCep = value;
 
@@ -72,6 +75,7 @@ class FindCep extends Component {
           return response.json();
         })
         .then(data => {
+          if (data.erro) this.setState({ notFound: true });
           this.setState({ showCard: true, address: data });
         })
         .catch(err => {});
@@ -79,7 +83,8 @@ class FindCep extends Component {
   };
 
   handleSubmit = value => {
-    this.handleCepChange(value);
+    this.setState({ notFound: false });
+    this.validationCep(value);
   };
 
   render() {
@@ -95,7 +100,10 @@ class FindCep extends Component {
           </CepSearch>
           {this.state.showCard && (
             <Card showCard={this.state.showCard} handleClose={this.handleClose}>
-              <Address address={this.state.address}></Address>
+              <Address
+                address={this.state.address}
+                notValid={this.state.notFound}
+              ></Address>
               <DivIframe>
                 <BoxIframe
                   url={`https://www.google.com/maps/embed/v1/search?key=AIzaSyBxp983W4Ppj3r0d6JPBDNkZa2XmHVAeHc&q=${this.state.address.logradouro} ${this.state.address.bairro} ${this.state.address.localidade} ${this.state.address.uf}`}

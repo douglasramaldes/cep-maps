@@ -38,7 +38,8 @@ class CepInput extends Component {
     this.props.onChange(event.target.value);
   };
 
-  handleSubmit = () => {
+  handleSubmit = e => {
+    e.preventDefault();
     if (isValidCep(formatCep(this.props.value))) {
       this.props.onSubmit(formatCep(this.props.value));
     }
@@ -46,7 +47,7 @@ class CepInput extends Component {
 
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <Label>CEP</Label>
         <Input
           id="CepFormInput"
@@ -57,8 +58,8 @@ class CepInput extends Component {
           maxLength="9"
           pattern="^\d{5}-\d{3}$"
         ></Input>
-        <Button onClick={this.handleSubmit}>Buscar</Button>
-      </div>
+        <Button type="submit">Buscar</Button>
+      </form>
     );
   }
 }
